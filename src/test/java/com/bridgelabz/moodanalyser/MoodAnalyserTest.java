@@ -27,12 +27,23 @@ public class MoodAnalyserTest {
 
     // Test for testing Null mood
     @Test
-    public void givenMessage_whenNULL_shouldReturnHappy() throws MoodAnalysisException {
+    public void givenMessage_whenNULL_shouldThrowMoodAnalysisException() throws MoodAnalysisException {
         try {
             MoodAnalyser moodAnalyser = new MoodAnalyser(null);
-            Assert.assertEquals("Happy", moodAnalyser.analyseMood());
+            moodAnalyser.analyseMood();
         } catch (MoodAnalysisException moodAnalysisException) {
             Assert.assertEquals("Invalid Message", moodAnalysisException.getMessage());
+        }
+    }
+
+    // Test for testing Empty Mood
+    @Test
+    public void givenMessage_whenEmpty_shouldThrowMoodAnalysisException() throws MoodAnalysisException {
+        try {
+            MoodAnalyser moodAnalyser = new MoodAnalyser("");
+            moodAnalyser.analyseMood();
+        } catch (MoodAnalysisException moodAnalysisException) {
+            Assert.assertEquals("Empty Mood", moodAnalysisException.getMessage());
         }
     }
 }
