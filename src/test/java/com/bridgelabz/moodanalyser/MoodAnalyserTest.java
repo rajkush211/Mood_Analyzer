@@ -3,6 +3,9 @@ package com.bridgelabz.moodanalyser;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
 public class MoodAnalyserTest {
     // Test for testing Sad mood
     @Test
@@ -44,6 +47,36 @@ public class MoodAnalyserTest {
             moodAnalyser.analyseMood();
         } catch (MoodAnalysisException moodAnalysisException) {
             Assert.assertEquals("Empty Mood", moodAnalysisException.getMessage());
+        }
+    }
+
+    // Test for testing MoodAnalyser class name should return MoodAnalyser object checking if both are equal
+    @Test
+    public void givenMoodAnalyserClassName_whenProper_shouldReturnObject() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
+        MoodAnalyser moodAnalyser = new MoodAnalyser();
+        Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser");
+        MoodAnalyser moodAnalyserObj = MoodAnalyserFactory.createMoodAnalyse(moodAnalyserConstructor);
+        boolean check = moodAnalyser.equals(moodAnalyserObj);
+        Assert.assertEquals(true, check);
+    }
+
+    // Test for testing When Passing improper class name should throw CLASS_NOT_FOUND Exception
+    @Test
+    public void givenMoodAnalyserClassName_whenImproper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("MobileAnalyser");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND, e.type);
+        }
+    }
+
+    // Test for testing When passing wrong constructor parameter should throw NO_SUCH_METHOD Exception
+    @Test
+    public void givenMoodAnalyserClassName_whenConstructorNotProper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException,InvocationTargetException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser", Integer.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
     }
 }

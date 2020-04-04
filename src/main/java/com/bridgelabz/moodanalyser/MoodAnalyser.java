@@ -1,8 +1,14 @@
 package com.bridgelabz.moodanalyser;
 
+import java.util.Objects;
+
 public class MoodAnalyser {
 
     String message;
+    // Default Constructor
+    public MoodAnalyser() {
+
+    }
     // Parameterized Constructor
     public MoodAnalyser(String message) {
         this.message = message;
@@ -21,5 +27,13 @@ public class MoodAnalyser {
       catch (NullPointerException nullPointerException) {
           throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL, "Invalid Message");
       }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) return true;
+        if (obj == null || !(obj instanceof MoodAnalyser)) return false;
+        MoodAnalyser that = (MoodAnalyser) obj;
+        return Objects.equals(message, that.message);
     }
 }
