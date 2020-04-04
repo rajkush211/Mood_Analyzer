@@ -55,7 +55,7 @@ public class MoodAnalyserTest {
     public void givenMoodAnalyserClassName_whenProper_shouldReturnObject() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
         MoodAnalyser moodAnalyser = new MoodAnalyser();
         Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser");
-        MoodAnalyser moodAnalyserObj = MoodAnalyserFactory.createMoodAnalyse(moodAnalyserConstructor);
+        MoodAnalyser moodAnalyserObj = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor);
         boolean check = moodAnalyser.equals(moodAnalyserObj);
         Assert.assertEquals(true, check);
     }
@@ -78,5 +78,21 @@ public class MoodAnalyserTest {
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
         }
+    }
+
+    // Test for testing MoodAnalyser parameter constructor when created through MoodAnalyserFactory class then check if two objects are equal
+
+    @Test
+    public void givenMoodAnalyserWithParameterConstructor_whenProper_shouldReturnObject() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+        MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Happy mood");
+        Constructor<?> moodAnalyserConstructor = null;
+        try {
+            moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser", String.class);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+        MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor, "I am in Happy mood");
+        boolean check = moodAnalyser.equals(moodAnalyserObject);
+        Assert.assertEquals(true, check);
     }
 }

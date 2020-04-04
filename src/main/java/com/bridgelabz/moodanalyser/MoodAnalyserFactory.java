@@ -18,7 +18,7 @@ public class MoodAnalyserFactory {
         }
     }
 
-    public static MoodAnalyser createMoodAnalyse(Constructor<?> moodAnalyserConstructor, Object... message) throws IllegalAccessException, InvocationTargetException, InstantiationException {
+    public static MoodAnalyser createMoodAnalyserObject(Constructor<?> moodAnalyserConstructor, Object... message) throws IllegalAccessException, InvocationTargetException, InstantiationException {
         return (MoodAnalyser)moodAnalyserConstructor.newInstance(message);
     }
 }
