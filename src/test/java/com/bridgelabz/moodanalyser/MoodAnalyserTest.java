@@ -62,7 +62,7 @@ public class MoodAnalyserTest {
 
     // Test for testing When Passing improper class name should throw CLASS_NOT_FOUND Exception
     @Test
-    public void givenMoodAnalyserClassName_whenImproper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public void givenMoodAnalyserClassName_whenImproper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
         try {
             Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("MobileAnalyser");
         } catch (MoodAnalysisException e) {
@@ -72,7 +72,7 @@ public class MoodAnalyserTest {
 
     // Test for testing When passing wrong constructor parameter should throw NO_SUCH_METHOD Exception
     @Test
-    public void givenMoodAnalyserClassName_whenConstructorNotProper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException,InvocationTargetException {
+    public void givenMoodAnalyserClassName_whenConstructorNotProper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException,InvocationTargetException, MoodAnalysisException {
         try {
             Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser", Integer.class);
         } catch (MoodAnalysisException e) {
@@ -81,9 +81,8 @@ public class MoodAnalyserTest {
     }
 
     // Test for testing MoodAnalyser parameter constructor when created through MoodAnalyserFactory class then check if two objects are equal
-
     @Test
-    public void givenMoodAnalyserWithParameterConstructor_whenProper_shouldReturnObject() throws IllegalAccessException, InstantiationException, InvocationTargetException {
+    public void givenMoodAnalyserWithParameterConstructor_whenProper_shouldReturnObject() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
         MoodAnalyser moodAnalyser = new MoodAnalyser("I am in Happy mood");
         Constructor<?> moodAnalyserConstructor = null;
         try {
@@ -94,5 +93,15 @@ public class MoodAnalyserTest {
         MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor, "I am in Happy mood");
         boolean check = moodAnalyser.equals(moodAnalyserObject);
         Assert.assertEquals(true, check);
+    }
+
+    // Test for testing when giving Improper class name should throw MoodAnalysisException
+    @Test
+    public void givenMoodAnalyserWithParameterConstructor_whenImproper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("MobileAnalyser", String.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND, e.type);
+        }
     }
 }
