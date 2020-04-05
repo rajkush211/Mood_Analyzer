@@ -97,11 +97,22 @@ public class MoodAnalyserTest {
 
     // Test for testing when giving Improper class name should throw MoodAnalysisException
     @Test
-    public void givenMoodAnalyserWithParameterConstructor_whenImproper_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
+    public void givenMoodAnalyserWithParameterConstructor_whenImproperClassName_shouldThrowMoodAnalysisException() throws IllegalAccessException, InstantiationException, InvocationTargetException, MoodAnalysisException {
         try {
             Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("MobileAnalyser", String.class);
         } catch (MoodAnalysisException e) {
             Assert.assertEquals(MoodAnalysisException.ExceptionType.CLASS_NOT_FOUND, e.type);
         }
+    }
+
+    // Test for testing when giving wrong constructor parameter should throw No_SUCH_METHOD Exception
+    @Test
+    public void givenMoodAnalyserWithParameterConstructor_whenWrongParameter_shouldThrowMoodAnalysisException() throws InvocationTargetException, InstantiationException, IllegalAccessException, MoodAnalysisException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser", Integer.class, String.class);
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
+
     }
 }
