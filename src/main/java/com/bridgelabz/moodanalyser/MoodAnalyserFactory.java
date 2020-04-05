@@ -1,6 +1,7 @@
 package com.bridgelabz.moodanalyser;
 
 import java.lang.reflect.Constructor;
+import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 
@@ -30,6 +31,18 @@ public class MoodAnalyserFactory {
             return result;
         } catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "Method not found");
+        }
+    }
+
+    public static void setVariableValues(MoodAnalyser moodAnalyserObject, String variableName, String variableValue) throws MoodAnalysisException, NoSuchFieldException, IllegalAccessException, InstantiationException, ClassNotFoundException {
+        Field field = null;
+        try {
+            field = moodAnalyserObject.getClass().getField(variableName);
+            field.set(moodAnalyserObject, variableValue);
+        } catch (NoSuchFieldException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_FIELD, "No such Field");
+        } catch (NullPointerException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL, "NULL value Entered");
         }
     }
 }
