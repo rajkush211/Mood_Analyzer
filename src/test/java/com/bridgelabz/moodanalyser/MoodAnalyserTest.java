@@ -123,4 +123,16 @@ public class MoodAnalyserTest {
         Object result = MoodAnalyserFactory.createMethod(moodAnalyserObject, "analyseMood");
         Assert.assertEquals("Happy", result);
     }
+
+    // Test for testing when passing wrong Method name should throw NO_SUCH_METHOD Exception
+    @Test
+    public void givenHappyMessage_whenImproper_shouldThrowMoodAnalysisException() throws MoodAnalysisException, InstantiationException, IllegalAccessException, InvocationTargetException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser", String.class);
+            MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor, "I am in Happy mood");
+            Object result = MoodAnalyserFactory.createMethod(moodAnalyserObject, "analyserWrongMood");
+        } catch (MoodAnalysisException e) {
+            Assert.assertEquals(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, e.type);
+        }
+    }
 }
