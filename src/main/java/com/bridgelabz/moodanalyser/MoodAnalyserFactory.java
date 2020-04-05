@@ -7,9 +7,9 @@ import java.lang.reflect.Method;
 
 public class MoodAnalyserFactory {
     // Default Constructor
-    public static Constructor<?> getConstructor(String className, Class<?>... parameter) throws MoodAnalysisException {
+    public static Constructor getConstructor(String className, Class... parameter) throws MoodAnalysisException {
         try {
-            Class<?> moodAnalyserClass = Class.forName(className);
+            Class moodAnalyserClass = Class.forName(className);
             return moodAnalyserClass.getConstructor(parameter);
         }
         catch (ClassNotFoundException e) {
@@ -31,6 +31,8 @@ public class MoodAnalyserFactory {
             return result;
         } catch (NoSuchMethodException e) {
             throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NO_SUCH_METHOD, "Method not found");
+        } catch (NullPointerException e) {
+            throw new MoodAnalysisException(MoodAnalysisException.ExceptionType.NULL, "NULL value Entered");
         }
     }
 
