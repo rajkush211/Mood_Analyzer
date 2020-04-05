@@ -4,7 +4,7 @@ import java.util.Objects;
 
 public class MoodAnalyser {
 
-    String message;
+    public String message;
     // Default Constructor
     public MoodAnalyser() {
 

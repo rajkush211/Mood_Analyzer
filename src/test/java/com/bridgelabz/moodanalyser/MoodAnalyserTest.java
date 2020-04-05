@@ -136,5 +136,18 @@ public class MoodAnalyserTest {
         }
     }
 
-    //
+    // Test When Setting Happy Message with Reflector should return Happy
+
+    @Test
+    public void usingReflector_messageSet_Happy_shouldReturnHappy() throws MoodAnalysisException, InstantiationException, IllegalAccessException, InvocationTargetException, NoSuchFieldException, ClassNotFoundException {
+        try {
+            Constructor<?> moodAnalyserConstructor = MoodAnalyserFactory.getConstructor("com.bridgelabz.moodanalyser.MoodAnalyser");
+            MoodAnalyser moodAnalyserObject = MoodAnalyserFactory.createMoodAnalyserObject(moodAnalyserConstructor);
+            MoodAnalyserFactory.setVariableValues(moodAnalyserObject, "message", "I am in Happy mood");
+            Object result = MoodAnalyserFactory.createMethod(moodAnalyserObject, "analyseMood");
+            Assert.assertEquals("Happy", result);
+        } catch (MoodAnalysisException e) {
+            e.printStackTrace();
+        }
+    }
 }
